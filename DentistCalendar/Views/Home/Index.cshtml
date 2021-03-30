@@ -12,10 +12,22 @@
     <link href="~/lib/fullcalendar/bootstrap/main.css" />
 }
 
+<div class="row">
+    <div class="col-md-2">
+        <div id="otherEvents">
+            <p><strong>Suruklenebilir Etkinlikler</strong></p>
+            <div class="fc-event">1.Etkinlik</div><br />
+            <div class="fc-event">2.Etkinlik</div><br />
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div id="calendar">
 
-<div id="calendar">
-
+        </div>
+    </div> 
 </div>
+
+
 
 
 
@@ -32,6 +44,18 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
+            var draggableEl = document.getElementById('otherEvents');
+
+            var Draggable = FullCalendarInteraction.Draggable;
+            new Draggable(draggableEl, {
+                itemSelecton: '.fc-event',
+                eventData: function (eventEl) {
+                    return {
+                        title: eventEl.innerText,
+                        duration: '01:30'
+                    };
+                }
+            }); 
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 plugins: ['interaction','dayGrid', 'timeGrid', 'list', 'bootstrap'],
@@ -132,9 +156,9 @@
                 //displayEventEnd : false,
                 // eventOrder : 'title', //start, -duration, allDay, title, [], function
                 // defaultDate : '2021-03-29',
-                validRange: {
-                    start:'2021-01-01'
-                },
+                //validRange: {
+                //   start:'2021-01-01'
+                //},
                 timeZone : 'UTC',
                 events: [
                     {
@@ -154,6 +178,7 @@
                 //    console.log(info.event.title); // event, el, isMirror
                 //},
                 selectable: true,
+                droppable: true,
                 select: function (selectionInfo) {
                     console.log(selectionInfo);
                 },
