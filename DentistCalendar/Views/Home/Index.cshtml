@@ -12,19 +12,20 @@
     <link href="~/lib/fullcalendar/bootstrap/main.css" />
 }
 
+
 <div class="row">
     <div class="col-md-2">
         <div id="otherEvents">
-            <p><strong>Suruklenebilir Etkinlikler</strong></p>
-            <div class="fc-event">1.Etkinlik</div><br />
-            <div class="fc-event">2.Etkinlik</div><br />
+            <p><strong>Sürüklenebilir Etkinlikler</strong></p>
+            <div class="fc-event" id="isValid">1. Etkinlik</div><br />
+            <div class="fc-event" id="isNotValid">2. Etkinlik</div><br />
         </div>
     </div>
     <div class="col-md-10">
         <div id="calendar">
 
         </div>
-    </div> 
+    </div>
 </div>
 
 
@@ -48,14 +49,14 @@
 
             var Draggable = FullCalendarInteraction.Draggable;
             new Draggable(draggableEl, {
-                itemSelecton: '.fc-event',
+                itemSelector: '.fc-event',
                 eventData: function (eventEl) {
                     return {
                         title: eventEl.innerText,
                         duration: '01:30'
                     };
                 }
-            }); 
+            });
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 plugins: ['interaction','dayGrid', 'timeGrid', 'list', 'bootstrap'],
@@ -155,9 +156,9 @@
                 //displayEventTime: true,
                 //displayEventEnd : false,
                 // eventOrder : 'title', //start, -duration, allDay, title, [], function
-                // defaultDate : '2021-03-29',
+                //defaultDate : '2020-05-04',
                 //validRange: {
-                //   start:'2021-01-01'
+                //    start : '2020-03-20'
                 //},
                 timeZone : 'UTC',
                 events: [
@@ -178,7 +179,7 @@
                 //    console.log(info.event.title); // event, el, isMirror
                 //},
                 selectable: true,
-                droppable: true,
+                droppable : true,
                 select: function (selectionInfo) {
                     console.log(selectionInfo);
                 },
@@ -232,7 +233,17 @@
                     console.log('Resize edildi.');
                     //
                     //eventResizeInfo.revert();
-                }
+                },
+                drop: function (dropInfo) {
+                    console.log('drop edildi.');  //allDay, date, dateStr, draggedEl
+                },
+                eventReceive: function (info) {
+                    console.log('Recieve methodu tetiklendi.');  //draggedEl, event
+                },
+                eventLeave: function (info) {
+                    console.log('Leave edildi.');  //Takvimler arasında olaylar sürüklendiğinde çalışır
+                },
+                dropAccept : '#isValid'
 
 
 
