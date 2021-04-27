@@ -10,10 +10,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DentistCalendar.Controllers
 {
-    public class AppoinmentController : Controller
+    public class AppointmentController : Controller
     {
         private ApplicationDbContext _context;
-        public AppoinmentController(ApplicationDbContext context)
+        public AppointmentController(ApplicationDbContext context)
         {
             _context = context;
         }

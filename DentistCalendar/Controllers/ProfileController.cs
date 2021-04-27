@@ -6,6 +6,7 @@ using DentistCalendar.Data.Entity;
 using DentistCalendar.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DentistCalendar.Controllers
 {
@@ -28,10 +29,15 @@ namespace DentistCalendar.Controllers
 
             if (_userManager.IsInRoleAsync(user, "Secretary").Result)
             {
+                var dentists = _userManager.Users.Where(x => x.IsDentist);
                 SecretaryViewModel model = new SecretaryViewModel()
                 {
                     User = user,
-                    Dentists = _userManager.Users.Where(x => x.IsDentist)
+                    Dentists = dentists,
+                    DentistsSelectList = dentists.Select(n => new SelectListItem { 
+                        Value = n.Id,
+                        Text = $"Dt. {n.Name} {n.Surname}"
+                    }).ToList()
                 };
                 return View("Secretary", model);
             }
