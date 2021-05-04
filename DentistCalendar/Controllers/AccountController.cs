@@ -48,7 +48,7 @@ namespace DentistCalendar.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Profile");
             }
 
             ModelState.AddModelError(String.Empty, "Oturum açmada bir hata oluştu.");

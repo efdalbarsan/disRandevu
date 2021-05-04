@@ -18,32 +18,38 @@ namespace DentistCalendar.Controllers
             _context = context;
         }
       
-        public JsonResult GetAppoinments()
+        public JsonResult GetAppointments()
         {
             var model = _context.Appointments
                 .Include(x => x.User).Select(x => new AppointmentViewModel()
                 {
+                    Id = x.Id,
                     Dentist = x.User.Name + " " + x.User.Surname,
-                    Patient = x.PatientName+ " " + x.PatientSurname,
+                    PatientName = x.PatientName,
+                    PatientSurname = x.PatientSurname,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
                     Description = x.Description,
+                    Color = x.User.Color,
                     UserId = x.User.Id
                 });
 
             return Json(model);
         }
 
-        public JsonResult GetAppoinmentsByDentist(string userId = "")
+        public JsonResult GetAppointmentsByDentist(string userId = "")
         {  
             var model = _context.Appointments.Where(x => x.UserId == userId)
                 .Include(x => x.User).Select(x => new AppointmentViewModel()
                 {
+                    Id = x.Id,
                     Dentist = x.User.Name + " " + x.User.Surname,
-                    Patient = x.PatientName + " " + x.PatientSurname,
+                    PatientName = x.PatientName,
+                    PatientSurname = x.PatientSurname,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
                     Description = x.Description,
+                    Color = x.User.Color,
                     UserId = x.User.Id
                 });
 
@@ -51,7 +57,7 @@ namespace DentistCalendar.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddOrUpdateAppoinment(AddOrUpdateAppointmentModel model)
+        public JsonResult AddOrUpdateAppointment(AddOrUpdateAppointmentModel model)
         {
             //Validasyon
             if (model.Id == 0)
